@@ -1,0 +1,43 @@
+{{ selfieARenseigner | json }}
+
+<form #maForm="ngForm">
+    <div class="row">
+        <div class="col">Titre</div>
+        <div class="col">
+            <input type="text" #titre="ngModel" name="titre" [(ngModel)]="selfieARenseigner.titre" required>
+            <!-- <span [style.visibility]="titre.valid ? 'hidden' : 'visible'">Titre obligatoire !</span> -->
+            <span [hidden]="titre.valid">Titre obligatoire 2 !</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            Ton selfie :
+        </div>
+        <div class="col">
+            <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
+                [videoOptions]="videoOptions"
+                [imageQuality]="1"
+                (initError)="handleInitError($event)"
+            ></webcam>
+            <button class="actionBtn" (click)="triggerSnapshot();">Take A Snapshot</button>
+        </div>
+    </div>
+
+    <div class="row snapshot" *ngIf="webcamImage">
+        <div class="col">
+            <h2>Nice one!</h2>
+            {{ webcamImage.imageAsDataUrl }}
+            <img [src]="webcamImage.imageAsDataUrl"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button type="submit" [disabled]="! maForm.form.valid" (click)="clickSurAjouter()" class="btn btn-primary">Nouveau selfie</button>
+        </div>
+        <div class="col">
+            <button type="button" (click)="clickSuAnnulerSaisie()" class="btn btn-secondary">Annuler</button>
+        </div>
+    </div>
+</form>
