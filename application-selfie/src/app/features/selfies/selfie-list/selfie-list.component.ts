@@ -18,6 +18,7 @@ export class SelfieListComponent implements OnInit, OnDestroy {
   
   lesSelfies: Selfie[] = null;
   
+  //le composant enfant qui veut recevoir des informations du composant parent
   @Input()
   set filtre(valeur: string) {
   }
